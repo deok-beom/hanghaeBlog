@@ -1,43 +1,49 @@
 package com.sparta.hanghaeblog.controller;
 
-import com.sparta.hanghaeblog.dto.IdRequestDto;
 import com.sparta.hanghaeblog.dto.PostRequestDto;
+import com.sparta.hanghaeblog.dto.PostResponseDto;
 import com.sparta.hanghaeblog.entity.Post;
 import com.sparta.hanghaeblog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class PostController {
     private final PostService postService;
 
-    @GetMapping("/")
-    public ModelAndView home() {
-        return new ModelAndView("index");
+    @PostMapping("/posts")
+    @ResponseBody
+    public PostResponseDto createPost(@RequestBody PostRequestDto requestDto, HttpServletRequest request) {
+        return postService.createPost(requestDto, request);
     }
 
-    @GetMapping("/api/posts")
+    @GetMapping("/posts")
+    @ResponseBody
     public List<Post> getPosts() {
         return postService.getPosts();
     }
 
-    @PostMapping("/api/posts")
-    public Post createPost(@RequestBody PostRequestDto requestDto) {
-        return postService.createPost(requestDto);
+    @GetMapping("/posts/{id}")
+    @ResponseBody
+    public PostResponseDto getPostById(@PathVariable Long id) {
+        return postService.getPostById(id);
     }
 
-    @PutMapping("/api/posts/{id}")
+    @PutMapping("/posts/{id}")
+    @ResponseBody
     public Long updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
         return postService.update(id, requestDto);
     }
 
-    @DeleteMapping("/api/posts/{id}")
+    @DeleteMapping("/posts/{id}")
+    @ResponseBody
     public Long deletePost(@PathVariable Long id) {
         return postService.delete(id);
     }

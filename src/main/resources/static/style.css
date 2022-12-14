@@ -1,0 +1,83 @@
+.post-box {
+    width: 95%;
+    max-width: 1000px;
+    margin: 20px auto 20px auto;
+
+    box-shadow: 0px 0px 3px 0px black;
+    padding: 20px;
+}
+
+.post-box > button {
+    margin-top: 15px;
+}
+
+.posts-box {
+    width: 95%;
+    max-width: 1000px;
+    margin: 20px auto 20px auto;
+}
+
+.card {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid grey;
+    border-radius: 0;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.footer {
+    position: relative;
+    height: 40px;
+}
+
+.footer img.icon-start-edit {
+    cursor: pointer;
+    position: absolute;
+    bottom: 14px;
+    right: 55px;
+    width: 18px;
+    height: 18px;
+}
+
+.footer img.icon-end-edit {
+    cursor: pointer;
+    position: absolute;
+    display: none;
+    bottom: 14px;
+    right: 55px;
+    width: 20px;
+    height: 15px;
+}
+
+.footer img.icon-delete {
+    cursor: pointer;
+    position: absolute;
+    bottom: 12px;
+    right: 19px;
+    width: 14px;
+    height: 18px;
+}
+
+.edit {
+    display: none;
+}
+
+.te-edit {
+    border-right: none;
+    border-top: none;
+    border-left: none;
+    resize: none;
+    border-bottom: 1px solid #212529;
+    width: 100%;
+    font-family: 'Spoqa Han Sans';
+}
+
+a {
+    text-decoration: none;
+}
