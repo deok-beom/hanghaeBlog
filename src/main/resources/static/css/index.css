@@ -1,0 +1,41 @@
+.post-box {
+    width: 95%;
+    max-width: 1000px;
+    margin: 20px auto 20px auto;
+
+    box-shadow: 0px 0px 3px 0px black;
+    padding: 20px;
+}
+
+.post-box > button {
+    margin-top: 15px;
+}
+
+.posts-box {
+    width: 95%;
+    max-width: 1000px;
+    margin: 20px auto 20px auto;
+}
+
+.card {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid grey;
+    border-radius: 0;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.footer {
+    position: relative;
+    height: 40px;
+}
+
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🚩항해 블로그</title>
+    <!-- ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+    <!-- JavaScript -->
+    <script type="text/javascript" th:src="@{/js/login.js}"></script>
+
+</head>
+<body>
+<div id="login-form">
+    <div id="login-title">로그인</div>
+    <button id="login-id-btn" onclick="location.href='/api/user/signup'">
+        회원 가입하기
+    </button>
+    <div class="login-id-label">아이디</div>
+    <input id="username" type="text" name="username" class="login-input-box">
+
+    <div class="login-id-label">비밀번호</div>
+    <input id="password" type="password" name="password" class="login-input-box">
+
+    <button id="login-id-submit" onclick="login()">로그인</button>
+
+    <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
+</div>
+</body>
+</html>

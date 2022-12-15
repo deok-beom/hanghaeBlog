@@ -1,42 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>"🚩항해 블로그"</title>
-        <!-- ajax -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- BOOTSTRAP -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- GOOGLE FONT -->
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
-        <!-- CSS -->
-        <link th:href="@{/style.css}" rel="stylesheet">
-        <!-- JavaScript -->
-        <script type="text/javascript" th:src="@{/index.js}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>"🚩항해 블로그"</title>
+    <!-- ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+    <!-- JavaScript -->
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
 
-    </head>
-    <body>
+</head>
+<body>
 
-        <div class="post-box">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="author" placeholder="url">
-                <label>닉네임</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="title" placeholder="url">
-                <label>제목</label>
-            </div>
-            <div class="form-floating">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">항해 블로그</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/user/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/user/signup">SignUp</a>
+                </li>
+                <li class="nav-item" style="display: none">
+                    <a class="nav-link" href="javascript:logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="post-box">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="author" placeholder="url">
+        <label>닉네임</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="title" placeholder="url">
+        <label>제목</label>
+    </div>
+    <div class="form-floating">
                 <textarea class="form-control" placeholder="Leave a comment here" id="contents"
                           style="height: 100px"></textarea>
-                <label>게시글 내용</label>
-            </div>
-            <button onclick="writePost()" type="button" class="btn btn-dark">게시글 작성</button>
-        </div>
+        <label>게시글 내용</label>
+    </div>
+    <button onclick="writePost()" type="button" class="btn btn-dark">게시글 작성</button>
+</div>
 
-        <div class="posts-box" id="post-list">
-            <!-- 글 목록 -->
-        </div>
+<div class="posts-box" id="post-list">
+    <!-- 글 목록 -->
+</div>
 
-    </body>
+</body>
 </html>

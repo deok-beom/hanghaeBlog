@@ -60,3 +60,8 @@ function writePost() {
         }
     });
 }
+
+function logout() {
+    document.cookie = 'Authorization' + '=' + '' + ';path=/';
+    window.location.reload();
+}
