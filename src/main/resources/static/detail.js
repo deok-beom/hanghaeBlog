@@ -67,9 +67,11 @@ function deleteOne(id) {
         type: 'DELETE',
         url: `/api/posts/${id}`,
         success: function (response) {
-            alert('게시글 삭제에 성공하였습니다.');
+            alert("삭제되었습니다.")
+
+            let host = window.location.host;
+            let url = host + '/api/home';
+            window.location.href = 'http://' + url;
         }
     })
-
-    location.replace(window.location.host + '/api/home');
 }
