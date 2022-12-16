@@ -17,17 +17,16 @@ function login() {
         contentType: "application/json",
         data: JSON.stringify({username: username, password: password}),
         success: function (response, status, xhr) {
-            if (response === 'success') {
-                let host = window.location.host;
-                let url = host + '/api/home';
-
-                document.cookie =
-                    'Authorization' + '=' + xhr.getResponseHeader('Authorization') + ';path=/';
-                window.location.href = 'http://' + url;
-            } else {
-                alert('로그인에 실패하셨습니다. 다시 로그인해 주세요.')
-                window.location.reload();
-            }
+            alert(response);
+            let host = window.location.host;
+            let url = host + '/api/home';
+            document.cookie =
+                'Authorization' + '=' + xhr.getResponseHeader('Authorization') + ';path=/';
+            window.location.href = 'http://' + url;
+        },
+        error: function (response) {
+            alert("[Error:" + response.status + "] " + response.responseText);
+            window.location.reload();
         }
     })
 }

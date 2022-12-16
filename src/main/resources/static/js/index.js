@@ -1,6 +1,47 @@
 $(document).ready(function () {
+    const auth = getToken();
+
+    if (auth == '') {
+        $('#logout').hide();
+        $('#post-box').hide();
+        $('#login').show();
+        $('#signup').show();
+    } else {
+        $('#logout').show();
+        $('#post-box').show();
+        $('#login').hide();
+        $('#signup').hide();
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: `/api/user/home`,
+        data: {},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", auth);
+        },
+        error: function (response) {
+            alert("[Error:" + response.status + "] " + response.responseText);
+            logout();
+        }
+    })
+
     getPosts();
 })
+
+function getToken() {
+    let cName = 'Authorization' + '=';
+    let cookieData = document.cookie;
+    let cookie = cookieData.indexOf('Authorization');
+    let auth = '';
+    if (cookie !== -1) {
+        cookie += cName.length;
+        let end = cookieData.indexOf(';', cookie);
+        if (end === -1) end = cookieData.length;
+        auth = cookieData.substring(cookie, end);
+    }
+    return auth;
+}
 
 function getPosts() {
     $.ajax({
@@ -44,19 +85,42 @@ function getPosts() {
 }
 
 function writePost() {
-    let author = $('#author').val();
+    const auth = getToken();
+
+    if (auth == '') {
+        alert("사용자 로그인이 필요합니다.")
+        let host = window.location.host;
+        let url = host + '/api/user/login';
+        window.location.href = 'http://' + url;
+    }
+
     let title = $('#title').val();
     let contents = $('#contents').val();
-    let data = {'author': author, 'title': title, 'contents': contents};
+
+    if (title.trim() == '') {
+        alert('제목을 입력해주세요')
+        return;
+    } else if (contents.trim() == '') {
+        alert('내용을 입력해주세요')
+        return;
+    }
+
+    let data = {'title': title,'contents': contents};
 
     $.ajax({
         type: 'POST',
         url: `/api/posts`,
         contentType: "application/json",
         data: JSON.stringify(data),
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", auth);
+        },
         success: function (response) {
             alert('게시글이 성공적으로 작성되었습니다.');
             window.location.reload();
+        },
+        error: function (response) {
+            alert("[Error:" + response.status + "] " + response.responseText);
         }
     });
 }

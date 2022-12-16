@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import net.bytebuddy.utility.nullability.MaybeNull;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -21,6 +23,9 @@ public class User {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
+
+    @OneToMany
+    List<Post> posts = new ArrayList<>();
 
     public User(String username, String password, UserRoleEnum role) {
         this.username = username;

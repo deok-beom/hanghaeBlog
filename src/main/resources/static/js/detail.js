@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     var id = location.search.substring(location.search.indexOf("?") + 1).split("=")[1];
 
@@ -31,47 +30,90 @@ $(document).ready(function () {
 function editPost() {
     showEdits();
     let contents = $(`#contents`).text().trim();
-    $(`#text-area`).val(contents);
+    $(`#contents-area`).val(contents);
+    let title = $(`#title`).text().trim();
+    $(`#title-area`).val(title);
 }
 
 function showEdits() {
-    $(`#edit-area`).show();
+    $(`#edit-title`).show();
+    $(`#edit-contents`).show();
     $(`#submit`).show();
     $(`#delete`).show();
 
+    $(`#title`).hide();
     $(`#contents`).hide();
     $(`#edit`).hide();
 }
 
 // 메모를 수정합니다.
 function submitEdit(id) {
-    let author = $(`#author`).text().trim();
-    let contents = $(`#text-area`).val().trim();
+    const auth = getToken();
 
-    let data = {'author': author, 'contents': contents};
+    let title = $(`#title-area`).val().trim();
+    let contents = $(`#contents-area`).val().trim();
+
+    if (title.trim() == '') {
+        alert('제목을 입력해주세요')
+        return;
+    } else if (contents.trim() == '') {
+        alert('내용을 입력해주세요')
+        return;
+    }
+
+    let data = {'title': title, 'contents': contents};
 
     $.ajax({
         type: 'PUT',
         url: `/api/posts/${id}`,
         contentType: "application/json",
         data: JSON.stringify(data),
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", auth);
+        },
         success: function (response) {
-            alert('게시글 변경에 성공하였습니다.');
+            alert('게시글이 성공적으로 변경되었습니다.');
+            window.location.reload();
+        },
+        error: function (response) {
+            alert('권한이 없습니다?');
             window.location.reload();
         }
     });
 }
 
 function deleteOne(id) {
+    const auth = getToken();
+
     $.ajax({
         type: 'DELETE',
         url: `/api/posts/${id}`,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", auth);
+        },
         success: function (response) {
             alert("삭제되었습니다.")
 
             let host = window.location.host;
             let url = host + '/api/home';
             window.location.href = 'http://' + url;
+        },
+        error: function (response) {
+            alert('권한이 없습니다.');
         }
     })
+}
+
+function getToken() {
+    let cName = 'Authorization' + '=';
+    let cookieData = document.cookie;
+    let cookie = cookieData.indexOf('Authorization');
+    let auth = '';
+    if (cookie !== -1) {
+        cookie += cName.length;
+        let end = cookieData.indexOf(';', cookie);
+        if (end === -1) end = cookieData.length;
+        auth = cookieData.substring(cookie, end);
+    }
+    return auth;
 }

@@ -1,15 +1,19 @@
 package com.sparta.hanghaeblog.service;
 
 import com.sparta.hanghaeblog.dto.LoginRequestDto;
+import com.sparta.hanghaeblog.dto.PostResponseDto;
 import com.sparta.hanghaeblog.dto.SignupRequestDto;
+import com.sparta.hanghaeblog.entity.Post;
 import com.sparta.hanghaeblog.entity.User;
 import com.sparta.hanghaeblog.entity.UserRoleEnum;
 import com.sparta.hanghaeblog.jwt.JwtUtil;
 import com.sparta.hanghaeblog.repository.UserRepository;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
@@ -60,5 +64,22 @@ public class UserService {
         }
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+    }
+
+    public void isUser(HttpServletRequest request) {
+        String token = jwtUtil.resolveToken(request);
+        Claims claims;
+
+        if (token != null) {
+            if (jwtUtil.validateToken(token)) {
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("사용자가 올바르지 않습니다.");
+            }
+
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
+            );
+        }
     }
 }

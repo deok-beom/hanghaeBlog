@@ -15,22 +15,23 @@ public class Post extends Timestamped{
     private Long id;
 
     @Column(nullable = false)
-    private String author;
-
-    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
     private String contents;
 
-    public Post(PostRequestDto requestDto) {
-        this.author = requestDto.getAuthor();
+    @ManyToOne
+    @JoinColumn(name = "AUTHOR_ID", nullable = false)
+    private User author;
+
+    public Post(PostRequestDto requestDto, User user) {
+        this.author = user;
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
     }
 
     public void update(PostRequestDto requestDto) {
-        this.author = requestDto.getAuthor();
+        this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
     }
 }
