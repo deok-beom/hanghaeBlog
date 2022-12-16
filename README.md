@@ -1,13 +1,17 @@
 # 항해 블로그
 스파르타 코딩클럽 내일배움캠프 4기 Spring 입문 과제
 
+
 최초 설계
+---
 ![KakaoTalk_20221209_111640782](https://user-images.githubusercontent.com/78391166/206608978-22440d48-21fb-4506-bd64-a92efaefc46d.jpg)
 
 ERD
+---
 ![image](https://user-images.githubusercontent.com/78391166/208017665-2a38a17a-7e24-429d-8eb8-083be9965c5b.png)
 
 API 명세서
+---
 ![image](https://user-images.githubusercontent.com/78391166/208019259-abc4d487-6675-4add-9e96-9f3e8a6758db.png)
 
 ---
