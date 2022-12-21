@@ -2,7 +2,7 @@ package com.sparta.hanghaeblog.controller;
 
 import com.sparta.hanghaeblog.dto.LoginRequestDto;
 import com.sparta.hanghaeblog.dto.SignupRequestDto;
-import com.sparta.hanghaeblog.service.UserService;
+import com.sparta.hanghaeblog.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +18,10 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/author")
+public class AuthorController {
 
-    private final UserService userService;
+    private final AuthorService authorService;
 
     @GetMapping("/signup")
     public ModelAndView signupPage() {
@@ -42,7 +42,7 @@ public class UserController {
         }
 
         try {
-            userService.signup(signupRequestDto);
+            authorService.signup(signupRequestDto);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -54,7 +54,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         try {
-            userService.login(loginRequestDto, response);
+            authorService.login(loginRequestDto, response);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -66,7 +66,7 @@ public class UserController {
     @GetMapping("/home")
     public ResponseEntity isUser(HttpServletRequest request) {
         try {
-            userService.isUser(request);
+            authorService.isUser(request);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

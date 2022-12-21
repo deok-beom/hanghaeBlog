@@ -1,13 +1,11 @@
 package com.sparta.hanghaeblog.service;
 
 import com.sparta.hanghaeblog.dto.LoginRequestDto;
-import com.sparta.hanghaeblog.dto.PostResponseDto;
 import com.sparta.hanghaeblog.dto.SignupRequestDto;
-import com.sparta.hanghaeblog.entity.Post;
-import com.sparta.hanghaeblog.entity.User;
+import com.sparta.hanghaeblog.entity.Author;
 import com.sparta.hanghaeblog.entity.UserRoleEnum;
 import com.sparta.hanghaeblog.jwt.JwtUtil;
-import com.sparta.hanghaeblog.repository.UserRepository;
+import com.sparta.hanghaeblog.repository.AuthorRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,19 +17,19 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class AuthorService {
 
-    private final UserRepository userRepository;
+    private final AuthorRepository authorRepository;
     private final JwtUtil jwtUtil;
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
     @Transactional
     public void signup(SignupRequestDto signupRequestDto) {
-        String username = signupRequestDto.getUsername();
+        String name = signupRequestDto.getName();
         String password = signupRequestDto.getPassword();
 
         // 회원 중복 확인
-        Optional<User> found = userRepository.findByUsername(username);
+        Optional<Author> found = authorRepository.findByName(name);
         if (found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자가 있습니다.");
         }
@@ -45,17 +43,17 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 
-        User user = new User(username, password, role);
-        userRepository.save(user);
+        Author user = new Author(name, password, role);
+        authorRepository.save(user);
     }
 
     @Transactional(readOnly = true)
     public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        String username = loginRequestDto.getUsername();
+        String username = loginRequestDto.getName();
         String password = loginRequestDto.getPassword();
 
         // 사용자 확인
-        User user = userRepository.findByUsername(username).orElseThrow(
+        Author user = authorRepository.findByName(username).orElseThrow(
                 () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
         );
         // 비밀번호 확인
@@ -63,7 +61,7 @@ public class UserService {
             throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getName(), user.getRole()));
     }
 
     public void isUser(HttpServletRequest request) {
@@ -77,7 +75,7 @@ public class UserService {
                 throw new IllegalArgumentException("사용자가 올바르지 않습니다.");
             }
 
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+            Author user = authorRepository.findByName(claims.getSubject()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
         }

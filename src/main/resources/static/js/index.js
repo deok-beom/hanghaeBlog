@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: 'GET',
-        url: `/api/user/home`,
+        url: `/api/author/home`,
         data: {},
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", auth);
@@ -90,7 +90,7 @@ function writePost() {
     if (auth == '') {
         alert("사용자 로그인이 필요합니다.")
         let host = window.location.host;
-        let url = host + '/api/user/login';
+        let url = host + '/api/author/login';
         window.location.href = 'http://' + url;
     }
 
