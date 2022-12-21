@@ -11,6 +11,7 @@ $(document).ready(function () {
             let contents = response['contents'];
             let createdAt = new Date(response['createdAt']);
             let modifiedAt = new Date(response['modifiedAt']);
+            let comments = response['comments'];
 
             $('#title').text(title);
             $('#author').text(author);

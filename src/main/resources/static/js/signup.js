@@ -13,19 +13,19 @@ function onclickAdmin() {
 }
 
 function signup() {
-    let username = $('#username').val();
+    let name = $('#name').val();
     let password = $('#password').val();
     let admin = $('#admin-check').is(':checked');
     let adminToken = $('#admin-token').val();
 
     $.ajax({
         type: "POST",
-        url: `/api/user/signup`,
+        url: `/api/author/signup`,
         contentType: "application/json",
-        data: JSON.stringify({username: username, password: password, admin: admin, adminToken: adminToken}),
+        data: JSON.stringify({name: name, password: password, admin: admin, adminToken: adminToken}),
         success: function (response) {
             let host = window.location.host;
-            let url = host + '/api/user/login';
+            let url = host + '/api/author/login';
             alert(response);
             window.location.href = 'http://' + url;
         },

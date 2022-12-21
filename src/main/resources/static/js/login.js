@@ -1,9 +1,9 @@
 function login() {
 
-    let username = $('#username').val();
+    let name = $('#name').val();
     let password = $('#password').val();
 
-    if (username.trim() == '') {
+    if (name.trim() == '') {
         alert('ID를 입력해주세요');
         return;
     } else if (password.trim() == '') {
@@ -13,9 +13,9 @@ function login() {
 
     $.ajax({
         type: "POST",
-        url: `/api/user/login`,
+        url: `/api/author/login`,
         contentType: "application/json",
-        data: JSON.stringify({username: username, password: password}),
+        data: JSON.stringify({name: name, password: password}),
         success: function (response, status, xhr) {
             alert(response);
             let host = window.location.host;
